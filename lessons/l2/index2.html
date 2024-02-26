@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <h2 v-text="title"></h2>
+
+            <!-- <p>{{p}}</p> -->
+
+            <div>
+                <li v-for="item in array">{{item}}</li>
+            </div>
+            <div>
+                <li v-for="{a,b} in array">{{a}}:{{b}}</li>
+            </div>
+        </div>
+    </body>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: " tablice i  dyrektywa v-for",
+                    p: 'przykład "ręcznego" pobrania danych z tablicy',
+                    array: [
+                        { a: 1, b: 4 },
+                        { a: 2, b: 5 },
+                        { a: 3, b: 6 },
+                    ],
+                };
+            },
+        }).mount("#app");
+    </script>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <style>
+            .dark {
+                background-color: gray;
+            }
+            .green {
+                background-color: green;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div v-bind:class="setBG(rok)" v-for="{id,model,typ,rok} in cars">
+                <p v-text="displayCar({id,model,typ,rok})"></p>
+                <img v-bind:src="getImageById(id)" alt="aa" />
+            </div>
+        </div>
+    </body>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    cars: [
+                        { id: 1, model: "model1", typ: "typ1", rok: 1991 },
+                        { id: 2, model: "model2", typ: "typ2", rok: 2992 },
+                        { id: 3, model: "model3", typ: "typ3", rok: 1993 },
+                    ],
+                };
+            },
+            methods: {
+                displayCar(obj) {
+                    return "model : " + obj.model + " typ : " + obj.typ + " rok : " + obj.rok;
+                },
+
+                getImageById(id) {
+                    return `http://localhost:3000/l2/gfx/${id}.png`;
+                },
+                setBG(rok) {
+                    if (rok > 2000) {
+                        return "dark";
+                    } else {
+                        return "green";
+                    }
+                },
+            },
+        }).mount("#app");
+    </script>
+</html>
