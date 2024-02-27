@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <style>
+            .red {
+                height: 50px;
+                width: 50px;
+                background-color: red;
+                margin: 5px;
+            }
+            .blue {
+                margin: 5px;
+
+                height: 50px;
+                width: 50px;
+                background-color: lightblue;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <h2 v-text="title"></h2>
+            <br />
+            <button @click="start()">start</button>
+            <div v-bind:class="className" v-for="{id,className} in filterArr(array)">{{id}}</div>
+        </div>
+    </body>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "uzależnij styl elementu od mijającej sekundy",
+                    array: [
+                        { id: 1, className: "red" },
+                        { id: 2, className: "blue" },
+                        { id: 3, className: "red" },
+                        { id: 4, className: "blue" },
+                        { id: 5, className: "red" },
+                    ],
+                    timer: 0,
+                };
+            },
+            methods: {
+                filterArr(arr) {
+                    if (this.timer % 2 == 0) {
+                        let val = arr.filter(({ id, className }) => {
+                            if (id % 2 == 0) {
+                                return { id, className };
+                            }
+                        });
+                        console.log(JSON.parse(JSON.stringify(val)));
+                        return JSON.parse(JSON.stringify(val));
+                    } else {
+                        let val = arr.filter(({ id, className }) => {
+                            if (id % 2 != 0) {
+                                return { id, className };
+                            }
+                        });
+                        return JSON.parse(JSON.stringify(val));
+                    }
+                },
+                start() {
+                    setInterval(() => {
+                        this.timer++;
+                    }, 1000);
+                },
+            },
+        }).mount("#app");
+    </script>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <style>
+            .red {
+                height: 50px;
+                width: 50px;
+                background-color: red;
+                margin: 5px;
+            }
+            .blue {
+                margin: 5px;
+
+                height: 50px;
+                width: 50px;
+                background-color: lightblue;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <p>{{ title }}</p>
+
+            <h1>{{curretInter}} : <span>00</span>:<span>{{ seconds }}</span></h1>
+        </div>
+    </body>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "timer",
+                    workInterval: null,
+                    restInterval: null,
+                    curretInter: "work",
+                    seconds: 10,
+                };
+            },
+            methods: {
+                start() {
+                    if (this.curretInter == "work") {
+                        this.workInterval = setInterval(() => {
+                            if (this.seconds <= 0) {
+                                this.seconds = 10;
+                                clearInterval(this.workInterval);
+                                this.curretInter = "rest";
+                                this.start();
+                            }
+                            this.seconds--;
+                        }, 1000);
+                    } else {
+                        this.restInterval = setInterval(() => {
+                            if (this.seconds <= 0) {
+                                this.seconds = 10;
+                                clearInterval(this.restInterval);
+                                this.curretInter = "work";
+                                this.start();
+                            }
+                            this.seconds--;
+                        }, 1000);
+                    }
+                },
+                stop() {
+                    if (this.curretInter == "work") {
+                        clearInterval(this.workInterval);
+                    } else {
+                        clearInterval(this.restInterval);
+                    }
+                },
+            },
+        }).mount("#app");
+    </script>
+</html>

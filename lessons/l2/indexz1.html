@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <style>
+            .red {
+                background-color: red;
+            }
+            .blue {
+                background-color: blue;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <h2 v-text="title"></h2>
+            <br />
+
+            <div v-bind:class="className">{{timer}}</div>
+        </div>
+    </body>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "uzależnij styl elementu od mijającej sekundy",
+                    timer: 0,
+                    interval: null,
+                    className: "red",
+                };
+            },
+            methods: {
+                start() {
+                    this.interval = setInterval(() => {
+                        this.timer++;
+                        this.className = this.className == "red" ? "blue" : "red";
+                    }, 1000);
+                },
+                stop() {
+                    clearInterval(this.interval);
+                },
+            },
+        }).mount("#app");
+    </script>
+</html>

@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-</head>
+    <body>
+        <div id="app">
+            <h2 v-text="title"></h2>
+            <p v-html="p"></p>
+            <a v-bind:href="onet_url">ONET</a>
+            <br />
+            <a :href="onet_url">ONET</a>
 
-<body>
-    <div id="app">
-        <h2 v-text="title"></h2>
-        <p v-html="p"></p>
-        <a v-bind:href="onet_url">ONET</a>
-        <br>
-        <a :href="onet_url">ONET</a>
-
-        <div>
-            <img v-bind:width="img_width" v-bind:height="img_height" v-bind:src="img_src" />
-            <img :height="img_width" :width="img_height" :src="img_src" />
+            <div>
+                <img v-bind:width="img_width" v-bind:height="img_height" v-bind:src="img_src" />
+                <img :height="img_width" :width="img_height" :src="img_src" />
+            </div>
         </div>
-    </div>
-</body>
-<script>
-    const app = Vue.createApp({
-        data() {
-            return {
-                title: "dyrektywa v-bind",
-                p: `ziała na atrybutach tagów HTML,
+    </body>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    title: "dyrektywa v-bind",
+                    p: `ziała na atrybutach tagów HTML,
 ma wersję skróconą do dwukropka (:)
 dołącza wartość lub wyrażenie z obiektu data do atrybutu html
 `,
-                onet_url: "http://onet.pl",
-                img_width: 200,
-                img_height: 100,
-                img_src: "gfx/google.png"
-            }
-        }
-    }).mount("#app")
-
-
-</script>
-
+                    onet_url: "http://onet.pl",
+                    img_width: 200,
+                    img_height: 100,
+                    img_src: "gfx/google.png",
+                };
+            },
+        }).mount("#app");
+    </script>
 </html>
