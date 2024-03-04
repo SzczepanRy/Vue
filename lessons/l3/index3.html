@@ -1,51 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <style>
-        .alert {
-            font-size: 20px;
-            color: red;
-        }
-    </style>
-</head>
-
-<body>
-    <div id="app">
-        <menu>
-            <li :class="checked?'alert':''" v-for=" {text,checked} in items">{{text}} <input type="checkbox"
-                    @click="(e)=>{onCheck(text,e)}" v-model:checked="checked"></li>
-        </menu>
-        <input type="text"></input>
-        <button>add</button>
-
-    </div>
-
-</body>
-<script>
-    const app = Vue.createApp({
-        data() {
-            return {
-                items: [
-                    { text: "element 1", checked: true },
-                    { text: "element 2", checked: false },
-                    { text: "element 3", checked: false },
-                ]
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <style>
+            .alert {
+                font-size: 20px;
+                color: red;
             }
-        },
-        methods: {
-            addEl(){
-                
-            }
-        }
-    }).mount("#app")
+        </style>
+    </head>
 
-
-</script>
-
+    <body>
+        <div id="app">
+            <menu>
+                <li :class="item.checked ? 'alert' : ''" v-for="item in items">
+                    {{item.text}}
+                    <input type="checkbox" v-model="item.checked" />
+                </li>
+            </menu>
+            <input type="text" v-on:keyup.enter="addItem" />
+        </div>
+    </body>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    items: [
+                        { text: "element 1", checked: true },
+                        { text: "element 2", checked: false },
+                        { text: "element 3", checked: false },
+                    ],
+                };
+            },
+            methods: {
+                addItem(e) {
+                    console.log("aa");
+                    this.items.push({ text: e.target.value, checked: false });
+                },
+            },
+        }).mount("#app");
+    </script>
 </html>

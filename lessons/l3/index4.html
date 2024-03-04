@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <style>
+            .alert {
+                font-size: 20px;
+                color: red;
+            }
+            td {
+                padding: 10px;
+                border: 1px solid black;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <table>
+                <tr>
+                    <td>lp</td>
+                    <td>product</td>
+                    <td>cena</td>
+                    <td>koszyk</td>
+                </tr>
+                <tr v-for="(item,i) of products">
+                    <td>{{i}}</td>
+                    <td>{{item.product}}</td>
+                    <td>{{item.price}}</td>
+                    <td
+                        @click="(e)=>{e.target.innerHTML = e.target.innerHTML=='dodaj do koszyka'?'dodano':'dodaj do koszyka'}"
+                    >
+                        {{item.selected}}
+                    </td>
+                    <!-- <td @click="this.innerHTML=='dodaj do koszyka'?'dodano':'dodaj do koszyka'">{{item.selected}}</td> -->
+                </tr>
+            </table>
+            <!-- <input type="text" v-on:keyup.enter="addItem" /> -->
+        </div>
+    </body>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    products: [
+                        { product: "książka", price: 100, selected: "dodaj do koszyka" },
+                        { product: "płyta CD", price: 200, selected: "dodaj do koszyka" },
+                        { product: "mleko", price: 300, selected: "dodaj do koszyka" },
+                        { product: "buty", price: 400, selected: "dodaj do koszyka" },
+                    ],
+                };
+            },
+            methods: {
+                addItem(e) {
+                    console.log("aa");
+                    this.items.push({ text: e.target.value, checked: false });
+                },
+            },
+        }).mount("#app");
+    </script>
+</html>
