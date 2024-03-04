@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        .alert {
+            font-size: 20px;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <menu>
+            <li :class="checked?'alert':''" v-for=" {text,checked} in items">{{text}} <input type="checkbox"
+                    @click="(e)=>{onCheck(text,e)}" v-model:checked="checked"></li>
+        </menu>
+        <input type="text"></input>
+        <button>add</button>
+
+    </div>
+
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                items: [
+                    { text: "element 1", checked: true },
+                    { text: "element 2", checked: false },
+                    { text: "element 3", checked: false },
+                ]
+            }
+        },
+        methods: {
+            addEl(){
+                
+            }
+        }
+    }).mount("#app")
+
+
+</script>
+
+</html>

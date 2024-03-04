@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="a">
+            <div @click="onClick">KLIK</div>
+            <br>
+            <input type="checkbox" @click="onCheckbox">
+            <br>
+            <button @click="onButtonClick">KLIK</button>
+        </div>
+        <hr>
+        <div class="b">
+            <select v-on:change="onChange">
+                <option>[wybierz]</option>
+                <option>option 1</option>
+                <option>option 2</option>
+            </select>
+            <div class="display">{{option}}</div>
+        </div>
+        <hr>
+        <div class="c">
+            <input @input="onInput" type="range">
+            <div class="display">{{range}}</div>
+        </div>
+        <hr>
+        <div class="d">
+            <input @input="onCheck" type="checkbox">
+            <div class="display">{{check}}</div>
+
+        </div>
+        <hr>
+        <div class="e">
+            <button @click="add">add the poewr</button>
+            <div class="pow">
+                {{pow}}
+            </div>
+            <br>
+            <button @click="calc">calc</button>
+            <div class="pow">
+                {{end}}
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                end: 2,
+                pow: 1,
+                option: "def",
+                range: 50,
+                check: "off"
+            }
+        },
+        methods: {
+            onButtonClick(e) {
+                console.log(e.target.value);
+
+                e.target.innerHTML = e.target.innerHTML == "KLIK" ? "KLOK" : "KLIK"
+
+            },
+            onCheckbox() {
+                console.log("checked");
+            },
+            onClick(e) {
+                console.log(e.target.value);
+                e.target.innerHTML = e.target.innerHTML == "KLIK" ? "KLOK" : "KLIK"
+            },
+            onChange(e) {
+                console.log(e.target.value)
+                this.option = e.target.value
+
+            },
+            onInput(e) {
+                console.log(e.target.value)
+                if (e.target.value == "on") {
+                    this.range
+
+                }
+
+            },
+            onCheck(e) {
+                console.log(e.target.value)
+
+                this.check = this.check == "on" ? "off" : "on"
+
+            },
+            add() {
+                this.pow++
+            },
+            calc() {
+                this.end = Math.pow(2, this.pow)
+            }
+
+        }
+    }).mount("#app")
+
+
+</script>
+
+</html>
