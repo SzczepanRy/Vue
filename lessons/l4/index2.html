@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <form action="/aaa" method="POST" @input="check" @reset="reset" @submit="submit">
+            <input type="text" placeholder="name" id="name" v-model="name" />
+            <label for="name">name.length : {{ name.length }}</label>
+            <input type="text" placeholder="wiek" id="wiek" v-model="wiek" />
+            <label for="wiek">wiek.length : {{wiek.length}}</label>
+            <input type="text" placeholder="zawod" id="zawod" v-model="zawod" />
+            <label for="zawod">zawod.length : {{zawod.length}}</label>
+            <input type="text" placeholder="wynagrodzenie" id="wynagrodzenie" v-model="wynagrodzenie" />
+            <label for="wynagrodzenie">wynagrodzenie.length : {{wynagrodzenie.length}}</label>
+            <input type="submit" value="Wyślij" :disabled="!isReady" />
+        </form>
+        <div class="a">
+            <div class="">name : {{ name }}</div>
+            <div class="">wiek : {{ wiek }}</div>
+            <div class="">zawod : {{ zawod }}</div>
+            <div class="">wynagrodzenie : {{ wynagrodzenie }}</div>
+        </div>
+
+        <!-- <input type="checkbox" @input="(event)=> checked = checked =='on'? 'off' : event.target.value"> -->
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    name: "",
+                    wiek: "",
+                    zawod: "",
+                    wynagrodzenie: "",
+                    checked: '',
+                    isReady: false
+                };
+            },
+            methods: {
+
+                check() {
+                    if (this.name.length > 0 && this.wiek.length > 0 && this.zawod.length > 0 && this.wynagrodzenie.length > 0) {
+                        this.isReady = true
+                    } else {
+                        this.isReady = false
+
+                    }
+                }
+            }
+
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

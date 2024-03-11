@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <form action="/aaa" method="POST" @reset="reset" @submit="submit">
+            <input type="text">
+            <button type="reset">reset</button>
+            <button type="submit"> submit</button>
+        </form>
+
+        <input type="checkbox" @input="(event)=> checked = checked =='on'? 'off' : event.target.value">
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    checked: ""
+                };
+            },
+            methods: {
+                reset(e) {
+                    console.log(this.checked);
+                    if (this.checked == "on") {
+                        e.preventDefault();
+                        console.log("formularz się nie resetuje")
+                    }
+                    console.log("formularz się resetuje")
+                },
+                submit(e) {
+                    if (checked == "on") {
+                        e.preventDefault();
+                        console.log("formularz się nie wysyła")
+                    }
+                    console.log("formularz się  wysyła")
+                }
+            }
+
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

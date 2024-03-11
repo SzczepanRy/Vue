@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        form {
+            display: flex;
+        }
+
+        form>div {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <form action="/aaa" method="POST" @input="check" @reset="reset" @submit="submit">
+            <div class="a">
+                <div class="inp" v-for=" {name,checked,price} of products">
+                    <input id="name" @input="(event)=> event.target.value =='on'?1:1 " type="checkbox">
+                    <label for="name">{{name}}</label>
+                </div>
+            </div>
+            <div class="b">
+                <div class="inp" v-for=" {option} of options">
+                    <input id="option" name="option" @input="(event)=> event.target.value =='on'? 1:1" type="checkbox">
+                    <label for="option">{{option}}</label>
+
+                </div>
+            </div>
+            <div class="c">
+                <div class="pot">
+                    <input id="option" @input="(event)=> checkedP = checkedP=='on'?'off':'on'" type="checkbox">
+                    <label for="name">accept</label>
+
+                </div>
+            </div>
+
+            <input type="submit" value="Wyślij" :disabled="!isReady" />
+        </form>
+
+
+        <!-- <input type="checkbox" @input="(event)=> checked = checked =='on'? 'off' : event.target.value"> -->
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    checkedP: '',
+                    checkedA: [],
+                    checkedF: [],
+                    isReady: false,
+                    products: [
+
+                        { name: "Myszka", checked: 'nie', price: 30, currency: "PLN" },
+                        { name: "Laptop", checked: 'nie', price: 2500, currency: "GBP" },
+                        { name: "Komputer", checked: 'nie', price: 4000, currency: "PLN" },
+
+                    ],
+                    options: [
+
+                        { option: 'Kurier' },
+                        { option: 'Poczta' },
+                        { option: 'Osobiście' }
+
+                    ],
+                };
+            },
+            methods: {
+
+                check() {
+                    console.log(this.checkedA, this.checkedP, this.checkedF);
+                    if (this.checkedA < 0 && this.checkedP > 0 && this.checkedF > 0) {
+                        this.isReady = true
+                    } else {
+                        this.isReady = false
+
+                    }
+                }
+                //do an array that is dependant on names of the names  of inputs
+            }
+
+        }).mount("#app")
+    </script>
+</body>
+
+</html>
