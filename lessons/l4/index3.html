@@ -24,13 +24,17 @@
         <form action="/aaa" method="POST" @input="check" @reset="reset" @submit="submit">
             <div class="a">
                 <div class="inp" v-for=" {name,checked,price} of products">
-                    <input id="name" @input="(event)=> event.target.value =='on'?1:1 " type="checkbox">
+                    <input id="name"
+                        @input="(event)=> {checkedF.includes(name) ?checkedF.splice(checkedF.indexOf(name),1) :checkedA.push(name) }"
+                        type="checkbox">
                     <label for="name">{{name}}</label>
                 </div>
             </div>
             <div class="b">
                 <div class="inp" v-for=" {option} of options">
-                    <input id="option" name="option" @input="(event)=> event.target.value =='on'? 1:1" type="checkbox">
+                    <input id="option" name="option"
+                        @input="(event)=> {checkedF.includes(option) ?checkedF.splice(checkedF.indexOf(option),1) :checkedF.push(option) }"
+                        type="checkbox">
                     <label for="option">{{option}}</label>
 
                 </div>
@@ -43,9 +47,14 @@
                 </div>
             </div>
 
+
+
+
             <input type="submit" value="Wyślij" :disabled="!isReady" />
         </form>
 
+        {{checkedA}}
+        {{checkedF}}
 
         <!-- <input type="checkbox" @input="(event)=> checked = checked =='on'? 'off' : event.target.value"> -->
     </div>
@@ -78,7 +87,7 @@
 
                 check() {
                     console.log(this.checkedA, this.checkedP, this.checkedF);
-                    if (this.checkedA < 0 && this.checkedP > 0 && this.checkedF > 0) {
+                    if (this.checkedA.length > 0 && this.checkedP == "on" && this.checkedF.length > 0) {
                         this.isReady = true
                     } else {
                         this.isReady = false
