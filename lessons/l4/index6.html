@@ -1,142 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <style>
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .a {
-            width: 200px;
-            height: 100px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-
-        .b {
-            width: 200px;
-
-            display: flex;
-            flex-direction: column;
-        }
-
-        .c {
-            width: 200px;
-
-            display: flex;
-            flex-direction: column;
-
-        }
-
-        img {
-            width: 80px;
-            height: 50px;
-        }
-    </style>
-
-</head>
-
-<body>
-    <div id="app">
-
-        <form :load="fetchData()" class="form">
-
-            <div class="a">
-                <div class="produkty" v-for="el in data.produkty">
-                    <p>{{el}}</p>
-                    <input type="checkbox" name="el" value="el">
-                </div>
-            </div>
-
-            <div class="b">
-                <div class="delivery" v-for="{name ,src} in data.delivery">
-                    <img :src="src" alt="dodo">
-                    <p>{{name}}</p>
-                    <input type="checkbox" class="b" value="name" @click="(e)=>checkB(e.target)">
-                </div>
-            </div>
-
-            <div class="c">
-                <div class="payment" v-for="{name ,src} in data.payment">
-                    <img :src="src" alt="dodo">
-                    <p>{{name}}</p>
-                    <input type="checkbox" class="c" value="name" @click="(e)=>checkC(e.target)">
-                </div>
-            </div>
-
-            <label for="">
-                accept
-
-                <input id="option" @input="(event)=> checkedP = checkedP=='on'?'off':'on'" type="checkbox">
-            </label>
-
-        </form>
-
-    </div>
-    <script>
-        const app = Vue.createApp({
-
-            data() {
-                return {
-                    recept: {},
-                    fetched: false,
-                    data: {},
-                    accept: ""
-                };
-            },
-            methods: {
-
-                checkB(element) {
-
-                    let elements = document.querySelectorAll(" .b");
-                    for (let el of elements) {
-                        console.log(el);
-                        if (el != element) { el.checked = false }
-                        else { console.log("found"); element.checked = true }
-                    }
-                },
-                checkC(element) {
-                    let elements = document.querySelectorAll(".c");
-                    for (let el of elements) {
-                        console.log(el);
-                        if (el != element) { el.checked = false }
-                        else {
-                            console.log("found");
-                            element.checked = true
-                        }
-                    }
-                }, fetchData() {
-                    if (!this.fetched) {
-                        (async () => {
-                            let res = await fetch("/data")
-                            let delData = await res.json()
-                            console.log(delData);
-                            this.data = delData
-                            this.fetched = true
-                        })()
-                    }
-                },
-                genRecept() {
-                    let elements = document.querySelectorAll(".c");
-                    for (let el of elements) {
-                        if (el.checked == true) {
-
-                            recept["kurier"] = el.innerHTML
-                        }
-                    }
-                }
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
             }
-        }).mount("#app")
-    </script>
+            #app {
+                width: 100vw;
+                display: flex;
+                flex-direction: row;
+            }
+            form {
+                display: flex;
+                flex-direction: column;
+            }
 
-</body>
+            .aa {
+                width: 200px;
+                height: 100px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+            }
 
+            .bb {
+                width: 200px;
+
+                display: flex;
+                flex-direction: column;
+            }
+
+            .cc {
+                width: 200px;
+
+                display: flex;
+                flex-direction: column;
+            }
+
+            img {
+                width: 80px;
+                height: 50px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <form :load="fetchData()" class="form">
+                <div class="aa">
+                    <div class="produkty" v-for="el in data.produkty">
+                        <p>{{el}}</p>
+                        <input type="checkbox" class="pr" name="el" value="el" @click="genRecept" />
+                    </div>
+                </div>
+
+                <div class="bb">
+                    <div class="delivery" v-for="{name ,src} in data.delivery">
+                        <img :src="src" alt="dodo" />
+                        <p>{{name}}</p>
+                        <input type="checkbox" class="b" value="name" @click="(e)=>checkB(e.target)" />
+                    </div>
+                </div>
+
+                <div class="cc">
+                    <div class="payment" v-for="{name ,src} in data.payment">
+                        <img :src="src" alt="dodo" />
+                        <p>{{name}}</p>
+                        <input type="checkbox" class="c" value="name" @click="(e)=>checkC(e.target)" />
+                    </div>
+                </div>
+
+                <label for="">
+                    accept
+
+                    <input class="accept" id="option" @click="genRecept" type="checkbox" />
+                </label>
+            </form>
+
+            <div>
+                <p class="recept" v-text="recept"></p>
+                <button :disabled="!isReady">send</button>
+            </div>
+        </div>
+        <script>
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        checkedP: "off",
+                        recept: {
+                            produkty: [],
+                        },
+                        fetched: false,
+                        data: {},
+                        accept: "",
+                        isReady: false,
+                    };
+                },
+                methods: {
+                    checkB(element) {
+                        let elements = document.querySelectorAll(".b");
+                        for (let el of elements) {
+                            console.log(el);
+                            if (el != element) {
+                                el.checked = false;
+                            } else {
+                                console.log("found");
+                                element.checked = true;
+                            }
+                        }
+                        this.genRecept();
+                    },
+                    checkC(element) {
+                        let elements = document.querySelectorAll(".c");
+                        for (let el of elements) {
+                            console.log(el);
+                            if (el != element) {
+                                el.checked = false;
+                            } else {
+                                console.log("found");
+                                element.checked = true;
+                            }
+                        }
+                        this.genRecept();
+                    },
+                    fetchData() {
+                        if (!this.fetched) {
+                            (async () => {
+                                let res = await fetch("/data");
+                                let delData = await res.json();
+                                console.log(delData);
+                                this.data = delData;
+                                this.fetched = true;
+                            })();
+                        }
+                    },
+                    genRecept() {
+                        let elements = document.querySelectorAll(".c");
+                        for (let el of elements) {
+                            if (el.checked == true) {
+                                this.recept["kurier"] = el.parentElement.children[1].innerHTML;
+                            }
+                        }
+                        let elementsB = document.querySelectorAll(".b");
+                        for (let el of elementsB) {
+                            if (el.checked == true) {
+                                this.recept["platonosc"] = el.parentElement.children[1].innerHTML;
+                            }
+                        }
+                        let elementsA = document.querySelectorAll(".pr");
+                        this.recept["produkty"] = [];
+
+                        for (let el of elementsA) {
+                            if (el.checked == true) {
+                                this.recept["produkty"].push(el.parentElement.children[0].innerHTML);
+                            }
+                        }
+
+                        let elAccept = document.querySelector(".accept");
+
+                        console.log(elAccept.checked);
+                        if (
+                            this.recept.produkty["0"] &&
+                            this.recept.platonosc &&
+                            this.recept.kurier &&
+                            elAccept.checked == true
+                        ) {
+                            this.isReady = true;
+                        } else {
+                            this.isReady = false;
+                        }
+                    },
+                },
+            }).mount("#app");
+        </script>
+    </body>
 </html>
