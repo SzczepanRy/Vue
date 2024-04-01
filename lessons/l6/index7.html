@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+     {{x}}
+     <component-a :prop-func="this.change"></component-a>
+
+    </div>
+
+    <script>
+        const ComponentA = {
+            template: "<button @click='change(300)'>300</button> <button @click='change(200)'>200</button><button @click='change(100)'>100</button>"
+            ,
+            data(){
+              return{
+                y: this.propX
+              }
+            },
+            methods:{
+              change(val){
+                this.propFunc(val)
+              }
+            },
+            props:["propFunc"]
+        }
+          const app = Vue.createApp({
+          data() {
+            return {
+                  x: 32
+            }
+          },
+          methods:{
+            change(val){
+              this.x = val
+            }
+          },
+          components:{
+            "component-a":ComponentA
+          }
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

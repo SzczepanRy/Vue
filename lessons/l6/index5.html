@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+     <button @click="change">change</button>
+     :prop-x == PropX
+     <component-a :prop-json="this.x"></component-a>
+     <component-a :prop-json="this.x"></component-a>
+     <component-a :prop-json="this.x"></component-a>
+    </div>
+
+    <script>
+        const ComponentA = {
+            template: "<h3> aa {{this.propJson}}</h3>"
+            ,
+            props:["propJson"]
+        }
+          const app = Vue.createApp({
+          data() {
+            return {
+                  x: {
+                name:'woman',
+                age:72
+              }  
+            }
+          },
+          methods:{
+            change(){
+              this.x={
+                name:'man',
+                age:7
+              }  
+            }
+          },
+          components:{
+            "component-a":ComponentA
+          }
+        }).mount("#app")
+    </script>
+</body>
+
+</html>
