@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            {{pVal}}
+            <component-p v-bind:func-prop="func"></component-p>
+        </div>
+
+        <script>
+            const ComponentP = {
+                template: `<div>
+                    <!-- <h1>{{this.propX}}</h1> -->
+                    <button @click="addItem(111)">send to parent</button>
+                </div>`,
+
+                props: ["funcProp"],
+                data() {
+                    return {
+                        dataX: this.propX,
+                    };
+                },
+                methods: {
+                    addItem(val) {
+                        this.funcProp(val);
+                    },
+                },
+            };
+
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        pVal: "unchanged",
+                        x: 100,
+                    };
+                },
+                methods: {
+                    func(val) {
+                        this.pVal = val;
+                    },
+                },
+                components: { "component-p": ComponentP },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

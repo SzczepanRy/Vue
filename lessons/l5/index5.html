@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            {{x}}
+            <component-p v-bind:prop-x="x"></component-p>
+            <component-p v-bind:prop-x="x"></component-p>
+            <component-p v-bind:prop-x="x"></component-p>
+            <button @click="add">dodaj 1</button>
+        </div>
+
+        <script>
+            const ComponentP = {
+                template: `<div>
+                    <h1>{{this.propX}}</h1>
+                    <h1>{{dataX}}</h1>
+                </div>`,
+
+                props: ["propX"],
+                data() {
+                    return {
+                        dataX: this.propX,
+                    };
+                },
+                methods: {},
+            };
+
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        x: 100,
+                    };
+                },
+                methods: {
+                    add() {
+                        this.x = 200;
+                    },
+                },
+                components: { "component-p": ComponentP },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

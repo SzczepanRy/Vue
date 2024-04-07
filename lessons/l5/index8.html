@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            {{pVal}}
+            <component-p v-bind:func-prop="func"></component-p>
+        </div>
+
+        <script>
+            const appData = {
+                title: "app title",
+                items: [{ text: "element 1" }, { text: "element 2" }],
+            };
+            const ComponentA = {
+                data() {
+                    return appData; // komponent pobiera dane globalne
+                },
+
+                template: `<div>
+                        <p>EL1: {{ items[0].text }}</p>
+                        <p>EL2: {{ items[1].text }}</p>
+                    </div>`,
+            };
+
+            Vue.createApp({
+                data() {
+                    return appData;
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <style>
+            .app {
+                display: flex;
+            }
+            .item {
+                background-color: gray;
+                margin: 10px;
+                width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div @click="validFn()" class="app">
+                <div class="kacesoria">
+                    <h3>aklcesoria</h3>
+                    <accesory-c :upacc="chAc" :item="item" v-for="item of products"> </accesory-c>
+                </div>
+                <div class="odbiur">
+                    <h2>forma odbioru</h2>
+                    <product-c :fun="chDost" :op="opt" v-for="opt of options"></product-c>
+                    <p>dostawa {{this.dost}}</p>
+                </div>
+                <div class="pot">
+                    <input type="checkbox" @click="()=>{this.pot = this.pot ? false : true}" id="pot" />
+                    <label for="pot"> potwierdzam auauauauuuuu </label>
+                </div>
+                <button :disabled="!this.valid">send</button>
+            </div>
+        </div>
+
+        <script>
+            const AccesoryC = {
+                template: `
+                <div class="item">
+                  <input @click="(e)=>{this.upacc(e.target.value)}" :value="item.name" type="checkbox" id="ch"/>
+                  <label for="ch">{{this.item.name}}</label>
+                  <p>{{this.item.price}}
+                  {{this.item.currency}}</p>
+
+                </div>
+            `,
+                props: ["upacc", "item"],
+            };
+
+            const ProductsC = {
+                template: `
+                <div class="opt">
+                  <input @click="(e)=>{this.fun(e.target.value)}" type="radio" :value="op.option" name="position" id="op">
+                  <label for="op">{{this.op.option}}</label>
+                </div>
+                `,
+                props: ["op", "fun"],
+            };
+
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        dost: "",
+                        pot: false,
+                        products: [
+                            { name: "Myszka", checked: "nie", price: 30, currency: "PLN" },
+                            { name: "Laptop", checked: "nie", price: 2500, currency: "GBP" },
+                            { name: "Komputer", checked: "nie", price: 4000, currency: "PLN" },
+                            { name: "Monitor", checked: "nie", price: 1000, currency: "GBP" },
+                            { name: "Głośniki", checked: "nie", price: 600, currency: "USD" },
+                        ],
+                        valid: false,
+                        options: [{ option: "Kurier" }, { option: "Poczta" }, { option: "Osobiście" }],
+                    };
+                },
+                methods: {
+                    chDost(dos) {
+                        console.log(dos);
+                        this.dost = dos;
+                    },
+                    chAc(ac) {
+                        console.log(ac);
+                        this.products = this.products.map((el) => {
+                            if (el.name == ac) {
+                                return { ...el, checked: el.checked == "nie" ? "tak" : "nie" };
+                            } else {
+                                return el;
+                            }
+                        });
+                    },
+                    validFn() {
+                        let ak = false;
+                        this.products.map((el) => {
+                            if (el.checked == "tak") {
+                                ak = true;
+                            }
+                        });
+                        let fo = false;
+                        if (this.dost != "") {
+                            fo = true;
+                        }
+                        console.log(ak, fo, this.pot);
+
+                        if (ak && fo && this.pot) {
+                            this.valid = true;
+                        } else {
+                            this.valid = false;
+                        }
+                    },
+                },
+                components: { "accesory-c": AccesoryC, "product-c": ProductsC },
+            }).mount("#app");
+        </script>
+    </body>
+</html>
